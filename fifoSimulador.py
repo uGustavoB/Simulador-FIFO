@@ -49,8 +49,9 @@ class FIFO:
     def executar(self):
         """ Executa os processos em ordem FIFO e gera um relatório """
         tempo_atual = 0
-        while not self.fila.estaVazia():
-            processo = self.fila.desenfileirar()
+        processos_ordenados = sorted([self.fila.desenfileirar() for _ in range(len(self.fila))], key=lambda p: p.tempo_chegada)
+        
+        for processo in processos_ordenados:
             if tempo_atual < processo.tempo_chegada:
                 tempo_atual = processo.tempo_chegada
 
