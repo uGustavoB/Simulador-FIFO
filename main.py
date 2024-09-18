@@ -1,10 +1,23 @@
-from Estruturas.FilaSequencial import Fila
+from fifoSimulador import FIFO
 
-'''
-Algorítmo principal escolhido: FIFO(Fila)
+def main():
+    fifo = FIFO()
+    fifo.adicionar_processo('P1', 0, 3)
+    fifo.adicionar_processo('P2', 2, 6)
+    fifo.adicionar_processo('P3', 4, 4)
 
-Objetivo:
-- Criar um sistema de gerenciamento de processos que simule o funcionamento de um sistema operacional.
-- O sistema deve ser capaz de criar, executar e finalizar processos.
-- O sistema deve ser capaz de gerenciar a fila de processos de acordo com a ordem de chegada.
-'''
+    print("\nAntes da execução:")
+    print(fifo.fila)
+
+    fifo.executar()
+
+    print("\nApós a execução:")
+    print(fifo.fila)
+
+    print("\nRelatório de execução:")
+    relatorio = fifo.gerar_relatorio()
+    for item in relatorio:
+        print(f'Processo: {item[0]}, Chegada: {item[1]}, Duração: {item[2]}, Tempo de Espera: {item[3]}, Tempo de Fim: {item[4]}')
+
+if __name__ == "__main__":
+   main()

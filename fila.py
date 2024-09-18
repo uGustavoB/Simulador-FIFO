@@ -1,3 +1,5 @@
+from typing import Any
+
 class FilaError(Exception):
     """Classe de exceção lançada quando uma violação de acesso aos elementos
        da fila é identificada.
