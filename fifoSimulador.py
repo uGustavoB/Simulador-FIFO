@@ -59,11 +59,22 @@ class FIFO:
             tempo_fim = tempo_atual + processo.duracao
             self.relatorio.append((processo.nome, processo.tempo_chegada, processo.duracao, tempo_espera, tempo_fim))
 
-            tempo_atual = tempo_fim
-            print(f'Executando {processo}... Tempo atual: {tempo_atual}')
+            print(f'>> Executando {processo.nome} [Duração: {processo.duracao}s | Chegada: {processo.tempo_chegada}s] - Tempo Atual: {tempo_atual}s')
 
-            # Simulação do tempo de execução
+            tempo_atual = tempo_fim
+
             time.sleep(1)
+
+    def calcular_tempos_medios(self) -> Tuple[float, float]:
+        """ Calcula e retorna os tempos médios de espera e de turnaround """
+        total_espera = sum(item[3] for item in self.relatorio)  # Tempo de espera
+        total_turnaround = sum(item[4] - item[1] for item in self.relatorio)  # Tempo de fim - tempo de chegada
+        num_processos = len(self.relatorio)
+
+        tempo_medio_espera = total_espera / num_processos if num_processos > 0 else 0
+        tempo_medio_turnaround = total_turnaround / num_processos if num_processos > 0 else 0
+
+        return tempo_medio_espera, tempo_medio_turnaround
 
     def gerar_relatorio(self) -> List[Tuple[str, int, int, int, int]]:
         """ Gera um relatório com os detalhes dos processos """

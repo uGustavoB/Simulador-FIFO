@@ -1,5 +1,6 @@
 from typing import Any
 
+
 class FilaError(Exception):
     """Classe de exceção lançada quando uma violação de acesso aos elementos
        da fila é identificada.
@@ -9,7 +10,6 @@ class FilaError(Exception):
             embutir na exceção
         """
         super().__init__(msg)
-
 
 class No:
     def __init__(self, carga:any):
@@ -62,6 +62,19 @@ class Fila:
             um objeto do tipo Fila, esta iniciará vazia. 
         """
         self.__head = Head()
+
+    def __iter__(self):
+        """ Método para tornar a fila iterável """
+        self._cursor = self.__head.inicio
+        return self
+
+    def __next__(self):
+        """ Método que permite percorrer a fila usando iteradores """
+        if self._cursor is None:
+            raise StopIteration
+        carga = self._cursor.carga
+        self._cursor = self._cursor.prox
+        return carga
 
 
     def estaVazia(self)->bool:
